@@ -11,26 +11,41 @@ async def create_department(department: Department) -> dict:
         cyp: str = (
             """
             CREATE (e:DEPT {
-                deptno: $deptno,
-                dname: $dname,
-                loc: $loc
+                DEPTNO: $DEPTNO,
+                DNAME: $DNAME,
+                LOC: $LOC
             })
             RETURN e
             """
         )
         params_dict: dict = {
-            "deptno": department.deptno,
-            "dname": department.dname,
-            "loc": department.loc
+            "DEPTNO": department.DEPTNO,
+            "DNAME": department.DNAME,
+            "LOC": department.LOC
         }
         result = session.run(cyp, params_dict).single()
         if result:
             department_node = result["e"]
-            # Convert Neo4j date to string
             department_data = {
-                "deptno": department_node["deptno"],
-                "dname": department_node["dname"],
-                "loc": department_node["loc"]
+                "DEPTNO": department_node["DEPTNO"],
+                "DNAME": department_node["DNAME"],
+                "LOC": department_node["LOC"]
             }
             return department_data
     return None
+
+async def destroy_department(deptno) -> bool:
+    with driver.session() as session:
+        cyp_check = (
+            """
+            MATCH (d:DEPT {DEPTNO: $DEPTNO})<-[:WORKS_IN]-(:EMP)
+            RETURN COUNT(*) AS rel_count
+            """
+        )
+        check_result = session.run(cyp_check, {"DEPTNO": deptno}).single()
+        if check_result["rel_count"] > 0:
+            return False
+
+        cyp = "MATCH (e:DEPT {DEPTNO: $DEPTNO}) DELETE e"
+        result = session.run(cyp, {"DEPTNO": deptno})
+        return result.consume().counters.nodes_deleted > 0

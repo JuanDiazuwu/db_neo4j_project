@@ -75,6 +75,7 @@ async def create_employee(employee: Employee) -> dict:
         result = session.run(cyp, params_dict).single()
         if result:
             employee_node = result["e"]
+            #department_number = result["DEPTNO"]
             # Convert Neo4j date to string
             employee_data = {
                 "EMPNO": employee_node["EMPNO"],
@@ -97,3 +98,34 @@ async def destroy_employee(empno):
         cyp = "MATCH (e:EMP {EMPNO: $EMPNO}) DELETE e"
         result = session.run(cyp, {"EMPNO": empno})
         return result.consume().counters.nodes_deleted > 0
+    
+# auxiliary functions
+async def assign_employee_to_department(empno: int, deptno: int) -> bool:
+    with driver.session() as session:
+        cyp: str = (
+            """
+            MATCH (e:EMP {EMPNO: $EMPNO})
+            MATCH (d:DEPT {DEPTNO: $DEPTNO})
+            MERGE (e)-[:WORKS_IN]->(d)
+            RETURN e, d
+            """
+        )
+        params_dict: dict = {
+            "EMPNO": empno,
+            "DEPTNO": deptno
+        }
+        result = session.run(cyp, params_dict).consume()
+        return result.counters.relationships_created > 0
+
+async def delete_employee_department_relation(empno:int) -> bool:
+    with driver.session() as session:
+        cyp: str = (
+            """
+            MATCH (e:EMP {EMPNO: $EMPNO})-[r:WORKS_IN]->(d:DEPT)
+            DELETE r
+            RETURN e, d
+            """
+        )
+        params_dict: dict = {"EMPNO": empno}
+        result = session.run(cyp, params_dict).consume()
+        return result.counters.relationships_deleted > 0
