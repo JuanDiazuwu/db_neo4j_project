@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from server.models.employee import Employee
+from server.models.employee import Employee, UpdateEmployee
 from server.controllers.employees import (index_employee, list_employees, 
                                           create_employee, replace_employee,
                                           destroy_employee, assign_employee_to_department,
@@ -36,8 +36,12 @@ async def post_employee(employee: Employee):
     raise HTTPException(400, "Something went wrong")
 
 @employee.put('/employees/{empno}', response_model=Employee)
-async def put_employee(empno:int, data):#TODO tipe of data
-    pass
+async def put_employee(empno:int, data:UpdateEmployee):#TODO tipe of data
+    update_data = data.model_dump(exclude_unset=True)  # Only include fields that are provided
+    response = await replace_employee(empno, update_data)
+    if not response:
+        raise HTTPException(404, f"There is no employee with the EMPNO {empno}")
+    return response
 
 @employee.delete('/employees/{empno}')
 async def delete_employee(empno:int):
