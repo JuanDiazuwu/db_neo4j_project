@@ -25,11 +25,11 @@ async def post_department(deptno: Department):
     response = await create_department(deptno)
     if response:
         return response
-    raise HTTPException(400, "Something went wrong")
+    raise HTTPException(400, "Department number must be unique")
 
 @department.put('/departments/{deptno}', response_model=Department)
-async def put_department(deptno:int, data:UpdateDepartment):#TODO type of data
-    update_data = data.dict(exclude_unset=True)  # Only include fields that are provided
+async def put_department(deptno:int, data:UpdateDepartment):
+    update_data = data.model_dump(exclude_unset=True)
     response = await replace_department(deptno, update_data)
     if not response:
         raise HTTPException(404, f"There is no department with the DEPTNO {deptno}")

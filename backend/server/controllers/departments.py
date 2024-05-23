@@ -36,6 +36,9 @@ async def list_departments():
     return departments
 
 async def create_department(department: Department) -> dict:
+    if not await is_deptno_unique(department.DEPTNO):
+        return None
+
     with driver.session() as session:
         cyp: str = (
             """
@@ -106,3 +109,9 @@ async def destroy_department(deptno) -> bool:
         cyp = "MATCH (e:DEPT {DEPTNO: $DEPTNO}) DELETE e"
         result = session.run(cyp, {"DEPTNO": deptno})
         return result.consume().counters.nodes_deleted > 0
+    
+async def is_deptno_unique(deptno:int) -> bool:
+    with driver.session() as session:
+        cyp = "MATCH (e:DEPT {DEPTNO: $DEPTNO}) RETURN e"
+        result = session.run(cyp, {"DEPTNO": deptno}).single()
+        return result is None

@@ -46,6 +46,9 @@ async def list_employees():
         return employees if employees else None
 
 async def create_employee(employee: Employee) -> dict:
+    if not await is_empno_unique(employee.EMPNO):
+        return None
+
     with driver.session() as session:
         cyp: str = (
             """
@@ -214,3 +217,9 @@ async def assing_manager(empno:int, mgrno:int) -> bool:
         }
         result = session.run(cyp, params_dict).consume()
         return result.counters.relationships_created > 0
+
+async def is_empno_unique(empno:int) -> bool:
+    with driver.session() as session:
+        cyp = "MATCH (e:EMP {EMPNO: $EMPNO}) RETURN e"
+        result = session.run(cyp, {"EMPNO": empno}).single()
+        return result is None

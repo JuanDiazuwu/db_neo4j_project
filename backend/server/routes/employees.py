@@ -33,7 +33,7 @@ async def post_employee(employee: Employee):
         if employee.MGR:
             await assing_manager(empno, employee.MGR)
         return response
-    raise HTTPException(400, "Something went wrong")
+    raise HTTPException(400, "Employee number must be unique")
 
 @employee.put('/employees/{empno}', response_model=Employee)
 async def put_employee(empno:int, data:UpdateEmployee):#TODO tipe of data
