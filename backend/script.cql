@@ -25,6 +25,6 @@ MATCH (e:EMP), (d:DEPT)
 WHERE e.DEPTNO = d.DEPTNO
 CREATE (e)-[:WORKS_IN]->(d);
 
-MATCH (e:EMP), (d:DEPT)
-WHERE e.DEPTNO = d.DEPTNO
-CREATE (e)-[:WORKS_IN]->(d);
+MATCH (e:EMP), (m:EMP)
+WHERE e.MGR = m.EMPNO
+CREATE (m)-[:MANAGES]->(e);
