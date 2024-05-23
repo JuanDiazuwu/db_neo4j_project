@@ -77,9 +77,38 @@ npm run dev
 
 10. Open a browser and navigate to `http://127.0.0.1:5173` to the web.
 
-### Run with docker
+### Run with docker backend
 
-<!--to do-->>
+1. Move to backend:
+
+``` bash
+cd backend
+```
+
+2. Build backend image:
+
+``` bash
+docker build -t neo4j_fastapi_app .
+```
+
+3. To run the backend:
+
+``` bash
+docker run -d -p 8000:8000 --name crud_neo4j neo4j_fastapi_app
+```
+
+### Run with docker frontend
+<!--to do-->
+
+### Run all with docker-compose
+
+1. Need to be at the root of the project.
+
+2. Run docker-compose.yml:
+
+``` bash
+docker-compose up -d
+```
 
 ## Authors
 

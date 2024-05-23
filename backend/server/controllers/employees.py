@@ -1,7 +1,7 @@
 from neo4j import GraphDatabase
 from server.models.employee import Employee
 
-URI = "neo4j://localhost:7687"
+URI = "neo4j://neo4j:7687"
 AUTH = ("neo4j", "password")
 
 driver = GraphDatabase.driver(URI, auth=AUTH)
