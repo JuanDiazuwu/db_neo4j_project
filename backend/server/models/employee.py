@@ -8,7 +8,7 @@ class Employee(BaseModel):
     MGR: Optional[int] = None    # manager
     HIREDATE: str               # hire_date = fecha de contratacióm
     SAL: float                  # salary
-    COMM: float = None          # commission
+    COMM: Optional[float] = None          # commission
     DEPTNO: int                 # department number
 
 class UpdateEmployee(BaseModel):
