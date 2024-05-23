@@ -129,3 +129,20 @@ async def delete_employee_department_relation(empno:int) -> bool:
         params_dict: dict = {"EMPNO": empno}
         result = session.run(cyp, params_dict).consume()
         return result.counters.relationships_deleted > 0
+    
+async def assing_manager(empno:int, mgrno:int) -> bool:
+    with driver.session() as session:
+        cyp: str = (
+            """
+            MATCH (e:EMP {EMPNO: $EMPNO})
+            MATCH (m:EMP {EMPNO: $MGRNO})
+            MERGE (m)-[:MANAGES]->(e)
+            RETURN e, m
+            """
+        )
+        params_dict: dict = {
+            "EMPNO": empno,
+            "MGRNO": mgrno
+        }
+        result = session.run(cyp, params_dict).consume()
+        return result.counters.relationships_created > 0

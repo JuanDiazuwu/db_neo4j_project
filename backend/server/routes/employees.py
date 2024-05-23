@@ -3,7 +3,8 @@ from server.models.employee import Employee
 from server.controllers.employees import (index_employee, list_employees, 
                                           create_employee, replace_employee,
                                           destroy_employee, assign_employee_to_department,
-                                          delete_employee_department_relation)
+                                          delete_employee_department_relation,
+                                          assing_manager)
 
 employee = APIRouter()
 
@@ -26,7 +27,11 @@ async def post_employee(employee: Employee):
     response = await create_employee(employee)
     if response:
         deptno = response.get("DEPTNO")
-        await assign_employee_to_department(employee.EMPNO, deptno)
+        empno = response.get("EMPNO")
+        await assign_employee_to_department(empno, deptno)
+
+        if employee.MGR:
+            await assing_manager(empno, employee.MGR)
         return response
     raise HTTPException(400, "Something went wrong")
 
