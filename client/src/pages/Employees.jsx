@@ -33,17 +33,23 @@ function Employees() {
     e.preventDefault();
     const list = []
     Array.from(e.target.elements).forEach((element)=>{list.push(element.value)})
+    const params = {
+      'EMPNO': list[0],
+      'ENAME': list[1],
+      'JOB': list[2],
+      'MGR': list[3],
+      'HIREDATE': list[4],
+      'SAL': list[5],
+      'COMM': list[6],
+      'DEPTNO': list[7]
+  };
+
+  const filteredParams = Object.fromEntries(
+      Object.entries(params).filter(([_, value]) => value != null && value !== '')
+  );
+    Array.from(e.target.elements).forEach((element)=>{list.push(element.value)})
     try {
-      const res = await axios.post('http://127.0.0.1:8000/employees',{
-        'EMPNO':list[0],
-        'ENAME':list[1],
-        'JOB':list[2],
-        'MGR':list[3],
-        'HIREDATE':list[4],
-        'SAL':list[5],
-        'COMM':list[6],
-        'DEPTNO':list[7]
-      });
+      const res = await axios.post('http://127.0.0.1:8000/employees',filteredParams);
       if(res.status == 200){
         setMessage('Se agrego un nuevo empleado')
         setMessageStatus(true)

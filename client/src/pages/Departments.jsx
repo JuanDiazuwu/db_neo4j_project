@@ -35,7 +35,7 @@ function Departments() {
     Array.from(e.target.elements).forEach((element)=>{list.push(element.value)})
     try {
       const res = await axios.post('http://127.0.0.1:8000/departments',{
-        'DEPNO':list[0],
+        'DEPTNO':list[0],
         'DNAME':list[1],
         'LOC':list[2]
       });
@@ -63,7 +63,6 @@ function Departments() {
   const readEvent = async (e) => {
     try {
       const res = await axios.get(`http://127.0.0.1:8000/departments`);
-      console.log(res)
       if(res.status == 200){
         setMessageStatus(true)
         setDepartmentsList(res.data)
