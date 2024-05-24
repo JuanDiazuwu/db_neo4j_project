@@ -4,7 +4,9 @@ from server.controllers.employees import (index_employee, list_employees,
                                           create_employee, replace_employee,
                                           destroy_employee, assign_employee_to_department,
                                           delete_employee_department_relation,
-                                          assing_manager)
+                                          assing_manager,
+                                          delete_manager_relationship,
+                                          delete_subordinate_relationships)
 
 employee = APIRouter()
 
@@ -45,11 +47,19 @@ async def put_employee(empno:int, data:UpdateEmployee):#TODO tipe of data
 
 @employee.delete('/employees/{empno}')
 async def delete_employee(empno:int):
-    relationship_deleted = await delete_employee_department_relation(empno)
-    if not relationship_deleted:
-        raise HTTPException(404, f"No relationship found for employee with EMPNO {empno}")
+    employee_data = await index_employee(empno)
+    if not employee_data:
+        raise HTTPException(404, f"There is no employee with the EMPNO {empno}")
+    mgr = employee_data.get("MGR")
+
+    if mgr:
+        await delete_manager_relationship(empno)
+    await delete_subordinate_relationships(empno)
+    await delete_employee_department_relation(empno)
+    
 
     response = await destroy_employee(empno)
-    if response:
-        return "Successfully deleted employee"
-    raise HTTPException(404, f"There is no employee with the id {empno}")
+    if not response:
+        raise HTTPException(404, f"There is no employee with the id {empno}")
+    return "Successfully deleted employee"
+    

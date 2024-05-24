@@ -17,7 +17,7 @@ async def index_employee(empno:int):
                 "EMPNO": employee_node["EMPNO"],
                 "ENAME": employee_node["ENAME"],
                 "JOB": employee_node["JOB"],
-                "MGR": employee_node["MGR"],
+                "MGR": employee_node.get("MGR"),
                 "HIREDATE": str(employee_node["HIREDATE"]),
                 "SAL": employee_node["SAL"],
                 "COMM": employee_node["COMM"],
@@ -224,3 +224,23 @@ async def is_empno_unique(empno:int) -> bool:
         cyp = "MATCH (e:EMP {EMPNO: $EMPNO}) RETURN e"
         result = session.run(cyp, {"EMPNO": empno}).single()
         return result is None
+
+async def delete_manager_relationship(empno:int) -> bool:
+    with driver.session() as session:
+        cyp = """
+        MATCH (m:EMP)-[r:MANAGES]->(e:EMP {EMPNO: $EMPNO})
+        DELETE r
+        RETURN e
+        """
+        result = session.run(cyp, {"EMPNO": empno}).single()
+        return result is not None
+    
+async def delete_subordinate_relationships(empno: int) -> bool:
+    with driver.session() as session:
+        cyp = """
+        MATCH (m:EMP {EMPNO: $EMPNO})-[r:MANAGES]->(e:EMP)
+        DELETE r
+        RETURN m
+        """
+        result = session.run(cyp, {"EMPNO": empno}).single()
+        return result is not None
