@@ -105,7 +105,13 @@ async def destroy_department(deptno) -> bool:
         )
         check_result = session.run(cyp_check, {"DEPTNO": deptno}).single()
         if check_result["rel_count"] > 0:
-            return False
+            cyp_delete_rels = (
+                """
+                MATCH (d:DEPT {DEPTNO: $DEPTNO})<-[r:WORKS_IN]-(e:EMP)
+                DELETE r
+                """
+            )
+            session.run(cyp_delete_rels, {"DEPTNO": deptno})
 
         cyp = "MATCH (e:DEPT {DEPTNO: $DEPTNO}) DELETE e"
         result = session.run(cyp, {"DEPTNO": deptno})
