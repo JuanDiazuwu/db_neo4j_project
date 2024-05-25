@@ -171,61 +171,61 @@ function Employees() {
   return (
     <div>
       <header className=' p-2 text-lg'>
-        <button className=' p-1 hover:bg-slate-200' onClick={createState}>Crear</button>
-        <button className=' p-1 hover:bg-slate-200' onClick={deleteState}>Eliminar</button>
-        <button className=' p-1 hover:bg-slate-200' onClick={updateState}>Modificar</button>
-        <button className=' p-1 hover:bg-slate-200' onClick={readState}>Consultar</button>
+        <button className=' p-1 hover:bg-slate-800 bg-slate-900 mx-2 rounded-sm px-2 font-medium' onClick={createState}>Crear EMP</button>
+        <button className=' p-1 hover:bg-slate-800 bg-slate-900 mx-2 rounded-sm px-2 font-medium' onClick={deleteState}>Eliminar EMP</button>
+        <button className=' p-1 hover:bg-slate-800 bg-slate-900 mx-2 rounded-sm px-2 font-medium' onClick={updateState}>Modificar EMP</button>
+        <button className=' p-1 hover:bg-slate-800 bg-slate-900 mx-2 rounded-sm px-2 font-medium' onClick={readState}>Consultar EMP</button>
       </header>
       {
         statePage == 0 ?
           <div>
             <form onSubmit={createEvent} className=' p-3'>
               <p>ID del empleado</p>
-              <input className=' bg-slate-200' type='number'></input>
+              <input className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>Nombre del empleado</p>
-              <input className=' bg-slate-200' type='text'></input>
+              <input className=' bg-slate-200 text-black rounded-sm' type='text'></input>
               <p>Puesto</p>
-              <input className=' bg-slate-200' type='text'></input>
+              <input className=' bg-slate-200 text-black rounded-sm' type='text'></input>
               <p>ID del manager</p>
-              <input className=' bg-slate-200' type='number'></input>
+              <input className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>Fechas de contratación</p>
-              <input className=' bg-slate-200' type='date'></input>
+              <input className=' bg-slate-200 text-black rounded-sm' type='date'></input>
               <p>Salario</p>
-              <input className=' bg-slate-200' type='number'></input>
+              <input className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>Comisión</p>
-              <input className=' bg-slate-200' type='number'></input>
+              <input className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>ID del departamento</p>
-              <input className=' bg-slate-200' type='number'></input>
-              <button>Subir</button>
+              <input className=' bg-slate-200 text-black rounded-sm' type='number'></input>
+              <button className=' bg-orange-500 m-5 p-1 px-2 rounded-md font-semibold'>Subir</button>
               {message ? messageStatus == true ?<p className=' text-green-500'>{message}</p>:<p className=' text-red-500'>{message}</p>:<></>}
             </form>
           </div>:
         statePage == 1 ? 
-          <div>
+          <div className='p-5'>
             <table >
               <thead>
                 <tr >
-                  <th >ID</th>
-                  <th >Nombre</th>
-                  <th >Puesto</th>
-                  <th >Manager</th>
-                  <th >Fecha de contratación</th>
-                  <th >Salario</th>
-                  <th >Comisión</th>
-                  <th >ID del departamento</th>
+                  <th className=' border p-2 text-center'>ID</th>
+                  <th className=' border p-2 text-center'>Nombre</th>
+                  <th className=' border p-2 text-center'>Puesto</th>
+                  <th className=' border p-2 text-center'>Manager</th>
+                  <th className=' border p-2 text-center'>Fecha de contratación</th>
+                  <th className=' border p-2 text-center'>Salario</th>
+                  <th className=' border p-2 text-center'>Comisión</th>
+                  <th className=' border p-2 text-center'>ID del departamento</th>
                 </tr>
               </thead>
               <tbody>
                 {employeesList.map(employee => (
                 <tr key={employee.EMPNO}>
-                  <td >{employee.EMPNO}</td>
-                  <td >{employee.ENAME}</td>
-                  <td >{employee.JOB}</td>
-                  <td >{employee.MGR}</td>
-                  <td >{employee.HIREDATE}</td>
-                  <td >{employee.SAL}</td>
-                  <td >{employee.COMM}</td>
-                  <td >{employee.DEPTNO}</td>
+                  <td className=' border p-2 text-center'>{employee.EMPNO}</td>
+                  <td className=' border p-2 text-center'>{employee.ENAME}</td>
+                  <td className=' border p-2 text-center'>{employee.JOB}</td>
+                  <td className=' border p-2 text-center'>{employee.MGR}</td>
+                  <td className=' border p-2 text-center'>{employee.HIREDATE}</td>
+                  <td className=' border p-2 text-center'>{employee.SAL}</td>
+                  <td className=' border p-2 text-center'>{employee.COMM}</td>
+                  <td className=' border p-2 text-center'>{employee.DEPTNO}</td>
                 </tr>))}
               </tbody>
             </table>
@@ -235,31 +235,31 @@ function Employees() {
         <div>
           <form onSubmit={updateEvent} className=' p-3'>
               <p>ID del empleado</p>
-              <input value={null} className=' bg-slate-200' type='number'></input>
+              <input value={null} className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>Nombre del empleado</p>
-              <input value={null} className=' bg-slate-200' type='text'></input>
+              <input value={null} className=' bg-slate-200 text-black rounded-sm' type='text'></input>
               <p>Puesto</p>
-              <input value={null} className=' bg-slate-200' type='text'></input>
+              <input value={null} className=' bg-slate-200 text-black rounded-sm' type='text'></input>
               <p>ID del manager</p>
-              <input value={null} className=' bg-slate-200' type='number'></input>
+              <input value={null} className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>Fechas de contratación</p>
-              <input value={null} className=' bg-slate-200' type='date'></input>
+              <input value={null} className=' bg-slate-200 text-black rounded-sm' type='date'></input>
               <p>Salario</p>
-              <input value={null} className=' bg-slate-200' type='number'></input>
+              <input value={null} className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>Comisión</p>
-              <input value={null} className=' bg-slate-200' type='number'></input>
+              <input value={null} className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>ID del departamento</p>
-              <input value={null} className=' bg-slate-200' type='number'></input>
-              <button>Modificar</button>
+              <input value={null} className=' bg-slate-200 text-black rounded-sm' type='number'></input>
+              <button className=' bg-orange-500 m-5 p-1 px-2 rounded-md font-semibold'>Modificar</button>
               {message ? messageStatus == true ?<p className=' text-green-500'>{message}</p>:<p className=' text-red-500'>{message}</p>:<></>}
             </form>
         </div>:
         statePage == 3 ? 
-        <div>
+        <div className='p-3'>
           <form onSubmit={deleteEvent}>
             <p>ID del empleado</p>
-            <input className=' bg-slate-200' type='number'></input>
-            <button>Eliminar</button>
+            <input className=' bg-slate-200 text-black rounded-sm' type='number'></input>
+            <button className=' bg-orange-500 m-5 p-1 px-2 rounded-md font-semibold'>Eliminar</button>
             {message ? messageStatus == true ?<p className=' text-green-500'>{message}</p>:<p className=' text-red-500'>{message}</p>:<></>}
           </form>
         </div>:

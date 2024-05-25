@@ -158,41 +158,41 @@ function Departments() {
   return (
     <div>
       <header className=' p-2 text-lg'>
-        <button className=' p-1 hover:bg-slate-200' onClick={createState}>Crear</button>
-        <button className=' p-1 hover:bg-slate-200' onClick={deleteState}>Eliminar</button>
-        <button className=' p-1 hover:bg-slate-200' onClick={updateState}>Modificar</button>
-        <button className=' p-1 hover:bg-slate-200' onClick={readState}>Consultar</button>
+        <button className=' p-1 hover:bg-slate-800 bg-slate-900 mx-2 rounded-sm px-2 font-medium' onClick={createState}>Crear DEPT</button>
+        <button className=' p-1 hover:bg-slate-800 bg-slate-900 mx-2 rounded-sm px-2 font-medium' onClick={deleteState}>Eliminar DEPT</button>
+        <button className=' p-1 hover:bg-slate-800 bg-slate-900 mx-2 rounded-sm px-2 font-medium' onClick={updateState}>Modificar DEPT</button>
+        <button className=' p-1 hover:bg-slate-800 bg-slate-900 mx-2 rounded-sm px-2 font-medium' onClick={readState}>Consultar DEPT</button>
       </header>
       {
         statePage == 0 ?
           <div>
             <form onSubmit={createEvent} className=' p-3'>
               <p>ID del departamento</p>
-              <input className=' bg-slate-200' type='number'></input>
+              <input className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>Nombre del departamento</p>
-              <input className=' bg-slate-200' type='text'></input>
+              <input className=' bg-slate-200 text-black rounded-sm' type='text'></input>
               <p>Localización del departamento</p>
-              <input className=' bg-slate-200' type='text'></input>
-              <button>Subir</button>
+              <input className=' bg-slate-200 text-black rounded-sm' type='text'></input>
+              <button className=' bg-orange-500 m-5 p-1 px-2 rounded-md font-semibold'>Subir</button>
               {message ? messageStatus == true ?<p className=' text-green-500'>{message}</p>:<p className=' text-red-500'>{message}</p>:<></>}
             </form>
           </div>:
         statePage == 1 ? 
-          <div>
+          <div className='p-5'>
             <table>
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Nombre del departamento</th>
-                  <th>Localización</th>
+                  <th className=' border p-2 text-center'>ID</th>
+                  <th className=' border p-2 text-center'>Nombre del departamento</th>
+                  <th className=' border p-2 text-center'>Localización</th>
                 </tr>
               </thead>
               <tbody>
                 {departmentsList.map(department => (
                 <tr key={department.DEPTNO}>
-                  <td>{department.DEPTNO}</td>
-                  <td>{department.DNAME}</td>
-                  <td>{department.LOC}</td>
+                  <td className=' border p-2 text-center'>{department.DEPTNO}</td>
+                  <td className=' border p-2 text-center'>{department.DNAME}</td>
+                  <td className=' border p-2 text-center'>{department.LOC}</td>
                 </tr>
                 ))}
               </tbody>
@@ -203,21 +203,21 @@ function Departments() {
         <div>
           <form onSubmit={updateEvent} className=' p-3'>
           <p>ID del departamento</p>
-              <input className=' bg-slate-200' type='number'></input>
+              <input className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>Nombre del departamento</p>
-              <input className=' bg-slate-200' type='text'></input>
+              <input className=' bg-slate-200 text-black rounded-sm' type='text'></input>
               <p>Localización del departamento</p>
-              <input className=' bg-slate-200' type='text'></input>
-              <button>Modificar</button>
+              <input className=' bg-slate-200 text-black rounded-sm' type='text'></input>
+              <button className=' bg-orange-500 m-5 p-1 px-2 rounded-md font-semibold'>Modificar</button>
               {message ? messageStatus == true ?<p className=' text-green-500'>{message}</p>:<p className=' text-red-500'>{message}</p>:<></>}
             </form>
         </div>:
         statePage == 3 ? 
-        <div>
+        <div className=' p-3'>
           <form onSubmit={deleteEvent}>
             <p>ID del departamento</p>
-            <input className=' bg-slate-200' type='number'></input>
-            <button>Eliminar</button>
+            <input className=' bg-slate-200 text-black rounded-sm' type='number'></input>
+            <button className=' bg-orange-500 m-5 p-1 px-2 rounded-md font-semibold'>Eliminar</button>
             {message ? messageStatus == true ?<p className=' text-green-500'>{message}</p>:<p className=' text-red-500'>{message}</p>:<></>}
           </form>
         </div>:
