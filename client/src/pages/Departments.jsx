@@ -7,7 +7,7 @@ function Departments() {
   const [departmentsList, setDepartmentsList] = useState([]);
   const [message, setMessage] = useState('')
   const [messageStatus, setMessageStatus] = useState(true)
-
+  // Estos estados permiten controlar en que estado del CRUD se encuentra el menu
   const createState = (e) => {
     e.preventDefault();
     setStatePage(0)
@@ -29,6 +29,8 @@ function Departments() {
     setStatePage(3)
     setMessage('')
   }
+  // Los eventos de CRUD se comunican con la API mediante una URL y al manejar los datos
+  // permite ya sea agregarlos a los parámetros o consultar una URL especifica mediante un ID
   const createEvent = async (e) => {
     e.preventDefault();
     const list = []
@@ -154,7 +156,7 @@ function Departments() {
   }
 
 
-
+  // Se despliega una sección del HTML dependiendo del estado del componente
   return (
     <div>
       <header className=' p-2 text-lg'>

@@ -3,6 +3,8 @@ import Employees from './pages/Employees'
 import Departments from './pages/Departments'
 
 function App() {
+
+  // Rutas de la pagina y header de la pagina
   return (
     <>
       <header className=' text-xl font-bold p-1 bg-black'>
