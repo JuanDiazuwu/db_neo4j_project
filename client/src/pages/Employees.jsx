@@ -234,6 +234,7 @@ function Employees() {
         statePage == 2 ? 
         <div>
           <form onSubmit={updateEvent} className=' p-3'>
+              <p className='p-1 font-medium py-2'>ID del empleado es un campo obligatorio, solo se debe llenar el campo a modificar</p>
               <p>ID del empleado</p>
               <input value={null} className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>Nombre del empleado</p>

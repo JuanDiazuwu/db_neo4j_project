@@ -41,7 +41,7 @@ function Departments() {
       });
       console.log(res)
       if(res.status == 200){
-        setMessage('Se agrego un nuevo empleado')
+        setMessage('Se agrego un nuevo departamento')
         setMessageStatus(true)
       }
     } catch (e) {
@@ -202,6 +202,7 @@ function Departments() {
         statePage == 2 ? 
         <div>
           <form onSubmit={updateEvent} className=' p-3'>
+          <p className='p-1 font-medium py-2'>ID del departamento es un campo obligatorio, solo se debe llenar el campo a modificar</p>
           <p>ID del departamento</p>
               <input className=' bg-slate-200 text-black rounded-sm' type='number'></input>
               <p>Nombre del departamento</p>
